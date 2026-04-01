@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Classroom Record">
+  <rect width="512" height="512" rx="120" fill="#132237" />
+  <rect x="66" y="72" width="380" height="362" rx="64" fill="#f8efe3" />
+  <path d="M130 154h252v30H130zm0 62h252v30H130zm0 62h158v30H130z" fill="#132237" opacity=".9"/>
+  <circle cx="352" cy="334" r="70" fill="#c35b1d" />
+  <circle cx="352" cy="334" r="26" fill="#fff" />
+</svg>
