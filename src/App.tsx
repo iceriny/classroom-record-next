@@ -27,7 +27,7 @@ function LoadingScreen() {
       <div className="panel hero-card">
         <p className="eyebrow">Classroom Record</p>
         <h1>正在恢复本地数据</h1>
-        <p className="muted">首次打开会初始化 IndexedDB 与 PWA 缓存。</p>
+        <p className="muted">首次打开会初始化本地数据与缓存。</p>
       </div>
     </div>
   );
@@ -118,40 +118,11 @@ function AppLayout() {
           <p className="eyebrow">PWA Classroom Workflow</p>
           <h1>课堂采集归档</h1>
         </div>
-        {!hiddenNav ? (
-          <nav className="tab-nav" aria-label="主导航">
-            <NavLink
-              to="/collect"
-              className={({ isActive }) =>
-                isActive ? "tab-link active" : "tab-link"
-              }
-            >
-              采集
-            </NavLink>
-            <NavLink
-              to="/gallery"
-              className={({ isActive }) =>
-                isActive ? "tab-link active" : "tab-link"
-              }
-            >
-              画廊
-            </NavLink>
-            <NavLink
-              to="/manage"
-              className={({ isActive }) =>
-                isActive ? "tab-link active" : "tab-link"
-              }
-            >
-              管理
-            </NavLink>
-          </nav>
-        ) : null}
       </header>
 
       {isOffline ? (
         <div className="offline-banner panel" role="status" aria-live="polite">
-          当前处于离线状态。已缓存的页面与 IndexedDB
-          媒体仍可访问，新的联网请求会等恢复网络后再可用。
+          离线中，已缓存页面和本地媒体仍可查看。
         </div>
       ) : null}
 
@@ -159,9 +130,7 @@ function AppLayout() {
         <div className="action-banner panel" role="status" aria-live="polite">
           <div>
             <strong>发现新版本</strong>
-            <p className="muted banner-copy">
-              已下载到后台。点击立即更新后会刷新到最新版本。
-            </p>
+            <p className="muted banner-copy">已准备好，更新后会刷新页面。</p>
           </div>
           <div className="stack-row wrap-row">
             <button
@@ -188,11 +157,11 @@ function AppLayout() {
             <strong>安装应用</strong>
             <p className="muted banner-copy">
               {deferredInstallPrompt
-                ? "当前浏览器已满足安装条件，可直接安装到手机桌面。"
+                ? "已满足安装条件，可直接添加到桌面。"
                 : isIos
-                  ? "iPhone 或 iPad 上不会弹出安装事件，请使用浏览器分享菜单并选择“添加到主屏幕”。"
+                  ? "iPhone 或 iPad 请用分享菜单添加到主屏幕。"
                   : (installMessage ??
-                    "如果没有出现安装按钮，请确认当前是 HTTPS 或 localhost，并使用受支持的浏览器。")}
+                    "若未出现安装按钮，请确认当前是 HTTPS 或 localhost。")}
             </p>
           </div>
           {deferredInstallPrompt ? (
@@ -227,6 +196,35 @@ function AppLayout() {
           <Route path="/manage" element={<ManagePage />} />
         </Routes>
       </main>
+
+      {!hiddenNav ? (
+        <nav className="tab-nav app-bottom-nav" aria-label="主导航">
+          <NavLink
+            to="/collect"
+            className={({ isActive }) =>
+              isActive ? "tab-link active" : "tab-link"
+            }
+          >
+            采集
+          </NavLink>
+          <NavLink
+            to="/gallery"
+            className={({ isActive }) =>
+              isActive ? "tab-link active" : "tab-link"
+            }
+          >
+            画廊
+          </NavLink>
+          <NavLink
+            to="/manage"
+            className={({ isActive }) =>
+              isActive ? "tab-link active" : "tab-link"
+            }
+          >
+            管理
+          </NavLink>
+        </nav>
+      ) : null}
     </div>
   );
 }

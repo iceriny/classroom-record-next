@@ -95,7 +95,7 @@ export default function ManagePage() {
     <div className="page-grid">
       <SectionCard
         title="存储策略"
-        description="媒体总会写入 IndexedDB；如果浏览器支持，也可以额外镜像写入你选择的目录。"
+        description="媒体总会写入 IndexedDB；如果浏览器支持，也可以额外镜像写入你选择的目录。手机系统相册通常不会直接读取浏览器沙盒目录，需要在预览页另存到设备。"
         action={
           <span className="status-pill">
             {isFileSystemAccessSupported()

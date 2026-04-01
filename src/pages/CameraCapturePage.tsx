@@ -135,9 +135,11 @@ export default function CameraCapturePage() {
         throw new Error("浏览器不支持 canvas 绘制。");
       }
 
+      context.imageSmoothingEnabled = true;
+      context.imageSmoothingQuality = "high";
       context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
       const blob = await new Promise<Blob | null>((resolve) => {
-        canvas.toBlob(resolve, "image/jpeg", 0.88);
+        canvas.toBlob(resolve, "image/png");
       });
       if (!blob) {
         throw new Error("无法生成照片文件。");
@@ -340,7 +342,7 @@ export default function CameraCapturePage() {
       </div>
 
       <div className="camera-actions panel">
-        <div className="stack-row wrap-row">
+        <div className="stack-row wrap-row camera-tool-row">
           <button
             type="button"
             className="ghost-btn"
@@ -400,8 +402,7 @@ export default function CameraCapturePage() {
           )}
         </div>
         <p className="muted camera-tip">
-          PWA 版本使用浏览器相机和
-          MediaRecorder。若浏览器不支持录像，将自动降级为仅拍照。
+          照片为标准 PNG。要进系统相册或发到电脑，请在预览页点“保存到设备”。
         </p>
       </div>
     </div>

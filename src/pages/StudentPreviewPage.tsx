@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 
 import MediaCard from "../components/MediaCard";
 import SectionCard from "../components/SectionCard";
-import { deleteMediaAsset } from "../lib/mediaStorage";
+import { deleteMediaAsset, exportMediaAsset } from "../lib/mediaStorage";
 import { useAppStore } from "../store/useAppStore";
 
 export default function StudentPreviewPage() {
@@ -86,6 +86,9 @@ export default function StudentPreviewPage() {
         }
       >
         <div className="stack-row wrap-row end-row section-tools">
+          <span className="muted compact-tip">
+            如需进入系统相册或发到电脑，请使用“保存到设备”。
+          </span>
           <button
             type="button"
             className="ghost-btn"
@@ -127,13 +130,22 @@ export default function StudentPreviewPage() {
               }
               action={
                 multi ? null : (
-                  <button
-                    type="button"
-                    className="danger-btn subtle-danger"
-                    onClick={() => void deleteOne(item.id)}
-                  >
-                    删除
-                  </button>
+                  <div className="media-action-row">
+                    <button
+                      type="button"
+                      className="secondary-btn subtle-secondary"
+                      onClick={() => void exportMediaAsset(item.id)}
+                    >
+                      保存到设备
+                    </button>
+                    <button
+                      type="button"
+                      className="danger-btn subtle-danger"
+                      onClick={() => void deleteOne(item.id)}
+                    >
+                      删除
+                    </button>
+                  </div>
                 )
               }
             />

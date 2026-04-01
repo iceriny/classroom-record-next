@@ -12,6 +12,29 @@ import {
 
 const ROOT_FOLDER_NAME = "ClassRecord";
 
+function mimeTypeFromFileName(fileName: string) {
+  const lower = fileName.toLowerCase();
+  if (lower.endsWith(".png")) return "image/png";
+  if (lower.endsWith(".jpg") || lower.endsWith(".jpeg")) return "image/jpeg";
+  if (lower.endsWith(".mp4")) return "video/mp4";
+  if (lower.endsWith(".webm")) return "video/webm";
+  return "application/octet-stream";
+}
+
+async function shareOrDownloadFile(file: File) {
+  if (navigator.share && navigator.canShare?.({ files: [file] })) {
+    await navigator.share({ files: [file], title: file.name });
+    return;
+  }
+
+  const url = URL.createObjectURL(file);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = file.name;
+  link.click();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
 export function sanitizePathPart(part: string) {
   return part
     .replace(/[\\/:*?"<>|]/g, "_")
@@ -94,7 +117,7 @@ async function writeBlobToPickedDirectory(
     create: true,
   });
   const writable = await fileHandle.createWritable();
-  await writable.write(blob);
+  await writable.write(await blob.arrayBuffer());
   await writable.close();
 }
 
@@ -181,6 +204,22 @@ export async function saveCapturedMediaAsset(params: {
 export async function getMediaBlob(mediaId: string) {
   const record = await getMediaBlobRecord(mediaId);
   return record?.blob ?? null;
+}
+
+export async function exportMediaAsset(mediaId: string) {
+  const record = await getMediaBlobRecord(mediaId);
+  if (!record) return false;
+
+  const file = new File([record.blob], record.fileName, {
+    type:
+      record.mimeType ||
+      record.blob.type ||
+      mimeTypeFromFileName(record.fileName),
+    lastModified: record.updatedAt,
+  });
+
+  await shareOrDownloadFile(file);
+  return true;
 }
 
 export async function deleteMediaAsset(mediaId: string) {
