@@ -16,6 +16,11 @@ import ManagePage from "./pages/ManagePage";
 import StudentPreviewPage from "./pages/StudentPreviewPage";
 import { useAppStore } from "./store/useAppStore";
 
+const ROUTER_BASENAME =
+  import.meta.env.BASE_URL === "/"
+    ? "/"
+    : import.meta.env.BASE_URL.replace(/\/$/, "");
+
 function LoadingScreen() {
   return (
     <div className="app-shell loading-shell">
@@ -239,7 +244,7 @@ export default function App() {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={ROUTER_BASENAME}>
       <AppLayout />
     </BrowserRouter>
   );

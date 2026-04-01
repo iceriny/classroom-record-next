@@ -2,10 +2,10 @@
   "name": "Classroom Record",
   "short_name": "ClassRecord",
   "description": "课堂班级采集、预览、归档与导出 PWA",
-  "id": "/",
+  "id": ".",
   "theme_color": "#0f172a",
   "background_color": "#f4efe6",
-  "scope": "/",
+  "scope": ".",
   "display": "standalone",
   "display_override": [
     "standalone",
@@ -13,16 +13,16 @@
     "browser"
   ],
   "orientation": "portrait",
-  "start_url": "/",
+  "start_url": ".",
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

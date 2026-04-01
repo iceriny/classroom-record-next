@@ -1,13 +1,15 @@
 const APP_SHELL_CACHE = "classroom-record-app-shell-v2";
 const RUNTIME_CACHE = "classroom-record-runtime-v2";
 const STATIC_CACHE = "classroom-record-static-v2";
-const APP_SHELL_URL = "/";
+const BASE_PATH = new URL(self.registration.scope).pathname;
+const APP_SHELL_URL = BASE_PATH;
+const withBase = (path) => new URL(path, self.registration.scope).pathname;
 const PRECACHE_URLS = [
-  "/",
-  "/manifest.webmanifest",
-  "/icon-192.png",
-  "/icon-512.png",
-  "/apple-touch-icon.png",
+  APP_SHELL_URL,
+  withBase("manifest.webmanifest"),
+  withBase("icon-192.png"),
+  withBase("icon-512.png"),
+  withBase("apple-touch-icon.png"),
 ];
 
 self.addEventListener("install", (event) => {
@@ -94,8 +96,8 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (
-    url.pathname.startsWith("/assets/") ||
-    url.pathname === "/manifest.webmanifest"
+    url.pathname.startsWith(withBase("assets/")) ||
+    url.pathname === withBase("manifest.webmanifest")
   ) {
     event.respondWith(staleWhileRevalidate(request));
   }
